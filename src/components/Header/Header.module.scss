@@ -7,22 +7,27 @@
   background-color: white;
   z-index: 2;
 }
+
 .headerContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 14px;
   height: 100%;
+  width: 100%;
 }
+
 .logo {
   height: 26px;
   margin: 17px 0;
 }
+
 .buttonsWrapper {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.headerButtons {
+
+.headerButton {
   width: 100px;
 }
