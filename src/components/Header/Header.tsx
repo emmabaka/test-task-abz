@@ -1,4 +1,4 @@
-import logo from '../../assets/svgs/logo.svg';
+import logo from '/assets/svgs/logo.svg';
 import s from './Header.module.scss';
 
 const Header = () => {

@@ -1,0 +1,41 @@
+.cardContainer {
+  padding: 20px;
+  width: 328px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.userImg {
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.userInfo {
+  font-size: 16px;
+  line-height: 1.63;
+  text-align: center;
+}
+
+.userName {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .cardContainer {
+    width: 344px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cardContainer {
+    width: 282px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .cardContainer {
+    width: 370px;
+  }
+}

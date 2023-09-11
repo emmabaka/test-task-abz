@@ -18,7 +18,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: $bg-color;
   color: $text-color;
-  line-height: 1.5;
 }
 
 ul {
@@ -33,23 +32,6 @@ a {
   margin: 0 auto;
   padding-left: 16px;
   padding-right: 16px;
-
-  @media (min-width: 768px) {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  @media (min-width: 1024px) {
-    padding-left: 60px;
-    padding-right: 60px;
-    width: 1024px;
-  }
-
-  @media (min-width: 2560px) {
-    width: 1170px;
-    padding-left: 0;
-    padding-right: 0;
-  }
 }
 
 .title {
@@ -75,5 +57,28 @@ a {
 
   &:hover {
     background-color: $button-hover;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    width: 1024px;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .container {
+    width: 1170px;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
