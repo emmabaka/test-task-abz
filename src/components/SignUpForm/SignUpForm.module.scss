@@ -1,5 +1,5 @@
 @import "../../styles/variables.scss";
-@import '../../styles/mixins.scss';
+@import "../../styles/mixins.scss";
 
 .signUpForm {
   max-width: 328px;
@@ -19,7 +19,7 @@
   padding-bottom: 50px;
 }
 
-.inputContainer:nth-child(3){
+.inputContainer:nth-child(3) {
   padding-bottom: 43px;
 }
 
@@ -87,7 +87,9 @@ input[type="radio"] {
 }
 
 .uploadLabel {
-  padding: 14px 15px;
+  font-size: 16px;
+  line-height: 26px;
+  padding: 13px 14px 13px 15px;
   border: 1px solid $text-color;
   border-radius: 4px 0px 0px 4px;
   cursor: pointer;
@@ -96,19 +98,22 @@ input[type="radio"] {
 .inputUploadContainer {
   flex: 1 1 auto;
   border: 1px solid $input-border-color;
+  border-left: none;
   border-radius: 0px 4px 4px 0px;
 }
 
 .uploadInput {
+  font-size: 16px;
+  line-height: 26px;
   width: 100%;
-  padding: 17px 16px;
+  padding: 13px 16px;
   cursor: pointer;
 }
 
 .uploadInputEmpty {
   color: transparent;
   width: 100%;
-  padding: 15px 16px;
+  padding: 15px;
   cursor: pointer;
 }
 
@@ -133,8 +138,8 @@ input[type="radio"] {
 }
 
 .submitButton {
- @include button;
-  width: 120px;
+  @include button;
+  width: 100px;
 }
 
 .spinnerWrapper {
@@ -144,10 +149,14 @@ input[type="radio"] {
 }
 
 .disabled {
-@include button;
-  width: 120px;
+  @include button;
+  width: 100px;
   background-color: $button-disabled;
   color: white;
+}
+
+.disabled:hover {
+  background-color: $button-disabled;
 }
 
 .helper {
@@ -167,10 +176,6 @@ input[type="radio"] {
   color: $error-color;
 }
 
-.inputContainer:nth-child(3) .error{
-  bottom: 39px;
-}
-
 .errorInput {
   border: 2px solid $error-color;
   & + .label {
@@ -179,5 +184,10 @@ input[type="radio"] {
 }
 
 .uploadLabel.errorInput {
+  padding-top: 12px;
+  padding-bottom: 12px;
   border-right: none;
+}
+.inputUploadContainer.errorInput .uploadInput {
+  padding: 12px 15px;
 }

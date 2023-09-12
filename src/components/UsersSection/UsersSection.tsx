@@ -27,7 +27,7 @@ const UsersSection = ({
 
       const users = res.data.users;
       const currPage = res.data.page;
-      const totalPages = res.data.total_pages
+      const totalPages = res.data.total_pages;
 
       setUsers((prev) => {
         const isPrevUsers = users.some((currItem: User) =>
@@ -40,7 +40,7 @@ const UsersSection = ({
       });
 
       setPage(currPage + 1);
-      
+
       if (currPage === totalPages) setIsLastPage(true);
     } catch (error) {
       console.log(error);
@@ -64,7 +64,7 @@ const UsersSection = ({
           ))}
         </ul>
         {isLoading ? (
-          <div className={s.loader}></div>
+          <div className="loader"></div>
         ) : (
           !isLastPage && (
             <button

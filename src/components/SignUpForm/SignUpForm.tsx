@@ -1,6 +1,7 @@
 import { useState, useEffect, Dispatch } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import clsx from "clsx";
 import fetchData from "../../api/fetchData";
 import postUser from "../../api/postUser";
 import { Position } from "../../interfaces/interfaces";
@@ -12,10 +13,10 @@ const SignUpForm = ({
 }: {
   setStatus: Dispatch<React.SetStateAction<string>>;
 }) => {
-  const [errorText, setErrorText] = useState("");
-  const [token, setToken] = useState("");
-  const [positions, setPosition] = useState([]);
-  const [load, setLoad] = useState(false);
+  const [errorText, setErrorText] = useState<string>("");
+  const [token, setToken] = useState<string>("");
+  const [positions, setPosition] = useState<Position[]>([]);
+  const [load, setLoad] = useState<boolean>(false);
 
   useEffect(() => {
     fetchData("positions").then((res) => setPosition(res.data.positions));
@@ -53,24 +54,23 @@ const SignUpForm = ({
   const validatePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
 
+    setFieldValue("photo", e.target.files![0].name);
+
     const img = new Image();
     img.src = window.URL.createObjectURL(file);
     img.onload = () => {
       if (img.width < 70 || img.height < 70) {
         setErrorText("The photo must be at least 70x70 pixels in size.");
-        e.target.value = "";
         return;
       }
     };
 
     if (!file.type.match("image/jpeg")) {
       setErrorText("The photo must be in JPEG/JPG format.");
-      e.target.value = "";
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
       setErrorText("Photos should be less than 5 MB in size.");
-      e.target.value = "";
       return;
     } else {
       handleChange(e);
@@ -105,6 +105,7 @@ const SignUpForm = ({
       })
       .finally(() => setLoad(false));
   };
+  console.log(values.photo);
 
   const isFormValid =
     values.name.trim() !== "" &&
@@ -117,9 +118,9 @@ const SignUpForm = ({
     <form className={s.signUpForm} onSubmit={onSubmit}>
       <div className={s.inputContainer}>
         <input
-            className={
-              errors.name && touched.name ? `${s.input} ${s.errorInput}` : s.input
-            }
+          className={clsx(s.input, {
+            [s.errorInput]: errors.name && touched.name,
+          })}
           type="text"
           id="name"
           name="name"
@@ -136,14 +137,31 @@ const SignUpForm = ({
           <p className={s.error}>{errors.name}</p>
         )}
       </div>
-
       <div className={s.inputContainer}>
         <input
-          className={
-            errors.phone && touched.phone
-              ? `${s.input} ${s.errorInput}`
-              : s.input
-          }
+          className={clsx(s.input, {
+            [s.errorInput]: errors.email && touched.email,
+          })}
+          type="email"
+          id="email"
+          name="email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
+          placeholder=" "
+        />
+        <label className={s.label} htmlFor="email">
+          Email
+        </label>
+        {errors.email && touched.email && (
+          <p className={s.error}>{errors.email}</p>
+        )}
+      </div>
+      <div className={s.inputContainer}>
+        <input
+          className={clsx(s.input, {
+            [s.errorInput]: errors.phone && touched.phone,
+          })}
           type="text"
           id="phone"
           name="phone"
@@ -160,29 +178,6 @@ const SignUpForm = ({
           <p className={s.error}>{errors.phone}</p>
         ) : (
           <p className={s.helper}>+38 (XXX) XXX - XX - XX</p>
-        )}
-      </div>
-
-      <div className={s.inputContainer}>
-        <input
-          className={
-            errors.email && touched.email
-              ? `${s.input} ${s.errorInput}`
-              : s.input
-          }
-          type="email"
-          id="email"
-          name="email"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.email}
-          placeholder=" "
-        />
-        <label className={s.label} htmlFor="email">
-          Email
-        </label>
-        {errors.email && touched.email && (
-          <p className={s.error}>{errors.email}</p>
         )}
       </div>
       <div className={s.radioContainer}>
@@ -205,28 +200,28 @@ const SignUpForm = ({
       <div className={s.upload}>
         <div className={s.uploadContainer}>
           <label
-            className={
-              errorText ? `${s.uploadLabel} ${s.errorInput}` : s.uploadLabel
-            }
+            className={clsx(s.uploadLabel, {
+              [s.errorInput]: errorText,
+            })}
             htmlFor="photo"
           >
             Upload
           </label>
           <div
-            className={
-              errorText
-                ? `${s.inputUploadContainer} ${s.errorInput}`
-                : s.inputUploadContainer
-            }
+            className={clsx(s.inputUploadContainer, {
+              [s.errorInput]: errorText,
+            })}
           >
             <input
-              className={!values.photo ? s.uploadInputEmpty : s.uploadInput}
+              className={clsx({
+                [s.uploadInputEmpty]: !values.photo,
+                [s.uploadInput]: values.photo,
+              })}
               type="file"
               name="photo"
               id="photo"
               onChange={validatePhoto}
               onBlur={handleBlur}
-              value={values.photo}
             />
           </div>
         </div>
@@ -234,14 +229,17 @@ const SignUpForm = ({
       </div>
       <div className={s.spinnerWrapper}>
         {load ? (
-          <div className={s.loader}>load</div>
+          <div className="loader"></div>
         ) : (
           <button
-            className={isFormValid ? s.submitButton : s.disabled}
+            className={clsx({
+              [s.disabled]: !isFormValid,
+              [s.submitButton]: isFormValid,
+            })}
             type="submit"
             disabled={!isFormValid}
           >
-            Submit
+            Sign up
           </button>
         )}
       </div>
