@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .heroSection {
   margin-top: 60px;
 }
@@ -22,6 +24,7 @@
   text-align: center;
   max-width: 380px;
   padding-bottom: 21px;
+  margin: 0 auto;
   color: white;
 }
 
@@ -31,10 +34,12 @@
   text-align: center;
   max-width: 380px;
   padding-bottom: 32px;
+  margin: 0 auto;
   color: white;
 }
 
 .signUpButton {
+  @include button;
   width: 100px;
 }
 
@@ -42,11 +47,6 @@
   .heroContainer {
     padding-top: 89px;
     padding-bottom: 88px;
-  }
-
-  .title,
-  .description {
-    margin: 0 auto;
   }
 }
 

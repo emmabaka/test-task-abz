@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .header {
   position: fixed;
   top: 0;
@@ -29,5 +31,6 @@
 }
 
 .headerButton {
+  @include button;
   width: 100px;
 }

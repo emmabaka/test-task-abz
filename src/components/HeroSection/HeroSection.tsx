@@ -12,7 +12,7 @@ const HeroSection = () => {
           mind. They should also be excited to learn, as the world of Front-End
           Development keeps evolving.
         </p>
-        <a className={`${s.signUpButton} button`} href='#sign-up'>
+        <a className={s.signUpButton} href='#sign-up'>
           Sign up
         </a>
       </div>

@@ -1,13 +1,6 @@
+import { User } from '../../interfaces/interfaces';
 import coverPhoto from '/assets/svgs/photo-cover.svg';
 import s from './UserCard.module.scss';
-
-interface User {
-  email: string;
-  name: string;
-  phone: string;
-  photo: string;
-  position: string;
-}
 
 const UserCard = ({
   user: { photo, position, name, email, phone },
@@ -31,10 +24,10 @@ const UserCard = ({
         width={70}
         height={70}
         // https://frontend-test-assignment-api.abz.agency/images/placeholders/placeholder.png
-        // onError={({ currentTarget }) => {
-        //   currentTarget.onerror = null;
-        //   currentTarget.src = { coverPhoto };
-        // }}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null;
+          currentTarget.src =  coverPhoto ;
+        }}
       />
       <p className={`${s.userInfo} ${s.userName}`} title={name}>
         {sliceSentence(name)}

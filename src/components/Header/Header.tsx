@@ -9,10 +9,10 @@ const Header = () => {
           <img src={logo} alt='Logo' width={104} height={26} />
         </a>
         <div className={s.buttonsWrapper}>
-          <a className={`${s.headerButton} button`} href='#users'>
+          <a className={s.headerButton} href='#users'>
             Users
           </a>
-          <a className={`${s.headerButton} button`} href='#sign-up'>
+          <a className={s.headerButton} href='#sign-up'>
             Sign up
           </a>
         </div>
