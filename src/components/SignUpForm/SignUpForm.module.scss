@@ -25,8 +25,8 @@
 
 .label {
   position: absolute;
-  top: 0;
-  left: 16px;
+  top: 3px;
+  left: 21px;
   font-size: 16px;
   line-height: 1.63;
   transform: translate(-5px, 11px);
@@ -36,10 +36,10 @@
 
 .input {
   display: block;
+  font-size: 16px;
+  line-height: 26px;
   width: 100%;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  padding-left: 16px;
+  padding: 13px 16px;
   background-color: transparent;
   outline: none;
   border: 1px solid $input-border-color;
@@ -217,8 +217,10 @@ input[type="radio"] {
 }
 
 .helper {
-  padding-top: 4px;
-  padding-left: 16px;
+  position: absolute;
+  bottom: 39px;
+  left: 16px;
+  transform: translateY(100%);
   font-size: 12px;
   line-height: 14px;
   color: $label-color;
@@ -230,7 +232,7 @@ input[type="radio"] {
   left: 16px;
   transform: translateY(100%);
   font-size: 12px;
-  line-height: 0.88;
+  line-height: 14px;
   color: $error-color;
 }
 
@@ -244,7 +246,10 @@ input[type="radio"] {
     color: $error-color;
   }
 }
-
+.errorInput.input {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
 .uploadLabel.errorInput {
   padding-top: 12px;
   padding-bottom: 12px;

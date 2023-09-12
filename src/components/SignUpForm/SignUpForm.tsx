@@ -113,6 +113,7 @@ const SignUpForm = ({
     values.phone.trim() !== "" &&
     values.photo.trim() !== "" &&
     values.positionId !== "";
+  console.log(errors.phone);
 
   return (
     <form className={s.signUpForm} onSubmit={onSubmit}>
@@ -133,9 +134,7 @@ const SignUpForm = ({
         <label className={s.label} htmlFor="name">
           Your name
         </label>
-        {errors.name && touched.name && (
-          <p className={s.error}>{errors.name}</p>
-        )}
+        <p className={s.error}>{errors.name && touched.name && errors.name}</p>
       </div>
       <div className={s.inputContainer}>
         <input
@@ -153,9 +152,9 @@ const SignUpForm = ({
         <label className={s.label} htmlFor="email">
           Email
         </label>
-        {errors.email && touched.email && (
-          <p className={s.error}>{errors.email}</p>
-        )}
+        <p className={s.error}>
+          {errors.email && touched.email && errors.email}
+        </p>
       </div>
       <div className={s.inputContainer}>
         <input
@@ -174,11 +173,16 @@ const SignUpForm = ({
         <label className={s.label} htmlFor="phone">
           Phone
         </label>
-        {errors.phone && touched.phone ? (
-          <p className={s.error}>{errors.phone}</p>
-        ) : (
-          <p className={s.helper}>+38 (XXX) XXX - XX - XX</p>
-        )}
+        <p
+          className={clsx({
+            [s.error]: errors.phone && touched.phone,
+            [s.helper]: !errors.phone || !touched.phone,
+          })}
+        >
+          {errors.phone && touched.phone
+            ? errors.phone
+            : "+38 (XXX) XXX - XX - XX"}
+        </p>
       </div>
       <div className={s.radioContainer}>
         <p className={s.radioTitle}>Select your position</p>
