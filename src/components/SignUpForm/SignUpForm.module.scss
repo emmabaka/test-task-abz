@@ -56,14 +56,71 @@
 }
 
 .radioTitle {
-  padding-bottom: 14px;
+  font-size: 16px;
+  line-height: 26px;
+  padding-bottom: 10px;
 }
 
 .radioWrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
   padding-bottom: 7px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  margin: -1px;
+}
+
+.radioLabel {
+  position: relative;
+  display: block;
+  padding-bottom: 7px;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.radioLabelText {
+  padding-left: 32px;
+}
+
+.outerCircle,
+.innerCircle {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.outerCircle {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 1px solid #d0cfcf;
+}
+
+.innerCircle {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  transform: translate(50%, 50%);
+}
+
+input[type="radio"]:checked ~ .innerCircle {
+  background-color: #00bdd3;
+}
+
+input[type="radio"]:checked ~ .outerCircle {
+  border-color: #00bdd3;
 }
 
 input[type="radio"] {
@@ -79,7 +136,7 @@ input[type="radio"] {
 .uploadContainer {
   display: flex;
   max-width: 328px;
-  padding-top: 36px;
+  padding-top: 40px;
 
   @media (min-width: 768px) {
     min-width: 380px;
@@ -161,8 +218,9 @@ input[type="radio"] {
 
 .helper {
   padding-top: 4px;
+  padding-left: 16px;
   font-size: 12px;
-  line-height: 0.88;
+  line-height: 14px;
   color: $label-color;
 }
 
@@ -174,6 +232,10 @@ input[type="radio"] {
   font-size: 12px;
   line-height: 0.88;
   color: $error-color;
+}
+
+.inputContainer:nth-child(3) .error {
+  bottom: 39px;
 }
 
 .errorInput {

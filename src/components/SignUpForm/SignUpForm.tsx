@@ -184,16 +184,18 @@ const SignUpForm = ({
         <p className={s.radioTitle}>Select your position</p>
         {positions.map((item: Position, i) => {
           return (
-            <div key={i} className={s.radioWrapper}>
+            <label key={i} className={s.radioLabel}>
               <input
+                className={s.visuallyHidden}
                 type="radio"
-                id={String(item.id)}
                 name="position_id"
                 value={item.id}
                 onChange={(e) => setFieldValue("positionId", e.target.value)}
               />
-              <label htmlFor={String(item.id)}> {item.name}</label>
-            </div>
+              <span className={s.outerCircle}></span>
+              <span className={s.innerCircle}></span>
+              <span className={s.radioLabelText}>{item.name}</span>
+            </label>
           );
         })}
       </div>
