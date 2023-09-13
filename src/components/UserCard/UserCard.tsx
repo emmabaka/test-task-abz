@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { User } from "../../interfaces/interfaces";
 import sliceText from "../../utils/sliceText";
 import coverPhoto from "/assets/svgs/photo-cover.svg";
@@ -8,6 +9,11 @@ const UserCard = ({
 }: {
   user: User;
 }) => {
+  const { isNameVisible, isEmailVisible } = {
+    isNameVisible: name.length > 25,
+    isEmailVisible: email.length > 25,
+  };
+
   return (
     <li className={s.cardContainer}>
       <img
@@ -22,21 +28,21 @@ const UserCard = ({
         }}
       />
       <p
-        className={`${s.userInfo} ${s.userName} ${
-          name.length > 25 && s.withTooltip
-        }`}
+        className={clsx(s.userInfo, s.userName, {
+          [s.withTooltip]: isNameVisible,
+        })}
       >
         {sliceText(name)}
-        {name.length > 25 && <span className={s.tooltip}>{name}</span>}
+        {isNameVisible && <span className={s.tooltip}>{name}</span>}
       </p>
-      <p className={s.userInfo}>{sliceText(position)}</p>
+      <p className={s.userInfo}>{position}</p>
       <p
-        className={`${s.userInfo} ${s.userEmail} ${
-          email.length > 25 && s.withTooltip
-        }`}
+        className={clsx(s.userInfo, s.userEmail, {
+          [s.withTooltip]: isEmailVisible,
+        })}
       >
         {sliceText(email)}
-        {email.length > 25 && <span className={s.tooltip}>{email}</span>}
+        {isEmailVisible && <span className={s.tooltip}>{email}</span>}
       </p>
       <p className={s.userInfo}>{phone}</p>
     </li>

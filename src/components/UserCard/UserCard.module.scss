@@ -28,10 +28,11 @@
   font-size: 16px;
   line-height: 26px;
   overflow-wrap: break-word;
-  padding: 0 16px;
+  padding: 3px 16px;
   border-radius: 4px;
   color: #fff;
   background: rgba(0, 0, 0, 0.87);
+  z-index: 1;
 }
 
 .userName {

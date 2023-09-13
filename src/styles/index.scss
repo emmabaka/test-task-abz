@@ -18,6 +18,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: $bg-color;
   color: $text-color;
+  min-width: 360px;
 }
 
 ul {
