@@ -12,14 +12,42 @@
 }
 
 .userInfo {
+  position: relative;
   font-size: 16px;
   line-height: 26px;
   text-align: center;
 }
 
+.tooltip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(100%);
+  display: none;
+  max-width: 290px;
+  font-size: 16px;
+  line-height: 26px;
+  overflow-wrap: break-word;
+  padding: 0 16px;
+  border-radius: 4px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.87);
+}
+
 .userName {
   padding-top: 20px;
   padding-bottom: 20px;
+
+  & .tooltip {
+    bottom: 15px;
+  }
+}
+
+.userName:hover,
+.userEmail:hover {
+  & .tooltip {
+    display: block;
+  }
 }
 
 @media (min-width: 768px) {
@@ -31,6 +59,11 @@
 @media (min-width: 1024px) {
   .cardContainer {
     width: 282px;
+  }
+
+  .tooltip {
+    right: 0;
+    max-width: 270px;
   }
 }
 
