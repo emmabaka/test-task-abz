@@ -2,6 +2,7 @@ import { Dispatch, useEffect, useState } from "react";
 import fetchData from "../../api/fetchData";
 import { User } from "../../interfaces/interfaces";
 import SignUpForm from "../SignUpForm/SignUpForm";
+import success from "/assets/svgs/success-image.svg";
 import s from "./SignUpSection.module.scss";
 
 const SignUpSection = ({
@@ -30,12 +31,14 @@ const SignUpSection = ({
   };
 
   return (
-    <section className={s.signUpSection}>
+    <section id="sign-up" className={s.signUpSection}>
       <div className="container">
         <h2 className="title">Working with POST request</h2>
         {status === "201" ? (
-        //   <SuccessSection />
-        <p>success</p>
+          <div className={s.successContainer}>
+            <h2 className="title">User successfully registered</h2>
+            <img className={s.successImg} src={success} alt="Success" />
+          </div>
         ) : (
           <SignUpForm setStatus={setStatus} />
         )}

@@ -3,12 +3,11 @@
 
 .signUpForm {
   max-width: 328px;
+  height: 651px;
   margin: 0 auto;
-  @media (min-width: 768px) {
-    max-width: 380px;
-    margin: 0 auto;
-  }
 }
+
+//Inputs
 
 .inputContainer {
   position: relative;
@@ -28,7 +27,7 @@
   top: 3px;
   left: 21px;
   font-size: 16px;
-  line-height: 1.63;
+  line-height: 26px;
   transform: translate(-5px, 11px);
   transition: transform 0.2s ease;
   color: $label-color;
@@ -54,6 +53,8 @@
     background-color: $bg-color;
   }
 }
+
+//Radio buttons
 
 .radioTitle {
   font-size: 16px;
@@ -84,11 +85,12 @@
   position: relative;
   display: block;
   padding-bottom: 7px;
-  font-size: 16px;
-  line-height: 26px;
+  cursor: pointer;
 }
 
 .radioLabelText {
+  font-size: 16px;
+  line-height: 26px;
   padding-left: 32px;
 }
 
@@ -105,7 +107,7 @@
   width: 20px;
   height: 20px;
   background-color: transparent;
-  border: 1px solid #d0cfcf;
+  border: 1px solid $input-border-color;
 }
 
 .innerCircle {
@@ -116,18 +118,15 @@
 }
 
 input[type="radio"]:checked ~ .innerCircle {
-  background-color: #00bdd3;
+  background-color: $radio-button-color;
 }
 
 input[type="radio"]:checked ~ .outerCircle {
-  border-color: #00bdd3;
+  border-color: $radio-button-color;
 }
 
-input[type="radio"] {
-  cursor: pointer;
-}
+// Upload photo input
 
-// Upload photo
 .upload {
   padding-bottom: 50px;
   position: relative;
@@ -143,6 +142,13 @@ input[type="radio"] {
   }
 }
 
+.inputUploadContainer {
+  flex: 1 1 auto;
+  border: 1px solid $input-border-color;
+  border-left: none;
+  border-radius: 0px 4px 4px 0px;
+}
+
 .uploadLabel {
   font-size: 16px;
   line-height: 26px;
@@ -150,13 +156,6 @@ input[type="radio"] {
   border: 1px solid $text-color;
   border-radius: 4px 0px 0px 4px;
   cursor: pointer;
-}
-
-.inputUploadContainer {
-  flex: 1 1 auto;
-  border: 1px solid $input-border-color;
-  border-left: none;
-  border-radius: 0px 4px 4px 0px;
 }
 
 .uploadInput {
@@ -194,15 +193,11 @@ input[type="radio"] {
   margin: -1px;
 }
 
+//Submit button
+
 .submitButton {
   @include button;
   width: 100px;
-}
-
-.spinnerWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .disabled {
@@ -215,6 +210,8 @@ input[type="radio"] {
 .disabled:hover {
   background-color: $button-disabled;
 }
+
+//Errors and helpers
 
 .helper {
   position: absolute;
@@ -246,15 +243,27 @@ input[type="radio"] {
     color: $error-color;
   }
 }
+
 .errorInput.input {
   padding-top: 12px;
   padding-bottom: 12px;
 }
+
 .uploadLabel.errorInput {
   padding-top: 12px;
   padding-bottom: 12px;
   border-right: none;
 }
-.inputUploadContainer.errorInput .uploadInput {
-  padding: 12px 15px;
+
+.inputUploadContainer.errorInput {
+  & .uploadInput {
+    padding: 12px 15px;
+  }
+}
+
+@media (min-width: 768px) {
+  .signUpForm {
+    max-width: 380px;
+    margin: 0 auto;
+  }
 }

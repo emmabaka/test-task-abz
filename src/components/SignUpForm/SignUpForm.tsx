@@ -105,7 +105,9 @@ const SignUpForm = ({
       })
       .finally(() => setLoad(false));
   };
-  console.log(values.photo);
+
+  const onPositionChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setFieldValue("positionId", e.target.value);
 
   const isFormValid =
     values.name.trim() !== "" &&
@@ -113,7 +115,6 @@ const SignUpForm = ({
     values.phone.trim() !== "" &&
     values.photo.trim() !== "" &&
     values.positionId !== "";
-  console.log(errors.phone);
 
   return (
     <form className={s.signUpForm} onSubmit={onSubmit}>
@@ -194,7 +195,7 @@ const SignUpForm = ({
                 type="radio"
                 name="position_id"
                 value={item.id}
-                onChange={(e) => setFieldValue("positionId", e.target.value)}
+                onChange={onPositionChange}
               />
               <span className={s.outerCircle}></span>
               <span className={s.innerCircle}></span>
@@ -252,4 +253,5 @@ const SignUpForm = ({
     </form>
   );
 };
+
 export default SignUpForm;

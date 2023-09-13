@@ -55,7 +55,7 @@ const UsersSection = ({
   };
 
   return (
-    <section className={s.usersSection}>
+    <section id="users" className={s.usersSection}>
       <div className="container">
         <h2 className="title">Working with GET request</h2>
         <ul className={s.usersCardsWrap}>
@@ -68,7 +68,7 @@ const UsersSection = ({
         ) : (
           !isLastPage && (
             <button
-              className={`${s.showMoreButton} button`}
+              className={s.showMoreButton}
               onClick={handleShowMoreButtonClick}
             >
               Show more

@@ -1,40 +1,32 @@
-import { User } from '../../interfaces/interfaces';
-import coverPhoto from '/assets/svgs/photo-cover.svg';
-import s from './UserCard.module.scss';
+import { User } from "../../interfaces/interfaces";
+import sliceText from "../../utils/sliceText";
+import coverPhoto from "/assets/svgs/photo-cover.svg";
+import s from "./UserCard.module.scss";
 
 const UserCard = ({
   user: { photo, position, name, email, phone },
 }: {
   user: User;
 }) => {
-  function sliceSentence(sentence: string) {
-    if (sentence.length <= 25) {
-      return sentence;
-    } else {
-      return sentence.slice(0, 25) + '...';
-    }
-  }
-
   return (
     <li className={s.cardContainer}>
       <img
         className={s.userImg}
-        src={photo || coverPhoto}
+        src={photo}
         alt={name}
         width={70}
         height={70}
-        // https://frontend-test-assignment-api.abz.agency/images/placeholders/placeholder.png
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;
-          currentTarget.src =  coverPhoto ;
+          currentTarget.src = coverPhoto;
         }}
       />
       <p className={`${s.userInfo} ${s.userName}`} title={name}>
-        {sliceSentence(name)}
+        {sliceText(name)}
       </p>
-      <p className={s.userInfo}>{position}</p>
+      <p className={s.userInfo}>{sliceText(position)}</p>
       <p className={s.userInfo} title={email}>
-        {sliceSentence(email)}
+        {sliceText(email)}
       </p>
       <p className={s.userInfo}>{phone}</p>
     </li>
