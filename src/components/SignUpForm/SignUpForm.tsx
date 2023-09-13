@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch } from "react";
+import { useState, useRef, useEffect, Dispatch } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
@@ -11,48 +11,73 @@ import s from "./SignUpForm.module.scss";
 const SignUpForm = ({
   setStatus,
 }: {
-  setStatus: Dispatch<React.SetStateAction<string>>;
+  setStatus: Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [errorText, setErrorText] = useState<string>("");
   const [token, setToken] = useState<string>("");
   const [positions, setPosition] = useState<Position[]>([]);
   const [load, setLoad] = useState<boolean>(false);
+  const photoFile = useRef<Blob | string>("");
 
   useEffect(() => {
     fetchData("positions").then((res) => setPosition(res.data.positions));
     fetchData("token").then((res) => setToken(res.data.token));
   }, []);
 
-  const { values, errors, touched, handleChange, setFieldValue, handleBlur } =
-    useFormik({
-      initialValues: {
-        name: "",
-        email: "",
-        phone: "",
-        photo: "",
-        positionId: "",
-      },
-      validateOnBlur: true,
-      validationSchema: Yup.object({
-        name: Yup.string()
-          .min(2, "Must be more than 2 characters")
-          .max(60, "Must be 60 characters or less")
-          .required("Required"),
-        phone: Yup.string()
-          .matches(/^\+380\d{9}$/, "Invalid phone number")
-          .required("Required"),
-        email: Yup.string()
-          .min(2, "Must be more than 2 characters")
-          .email("Invalid email address")
-          .max(100, "Must be 100 characters or less")
-          .required("Required"),
-        photo: Yup.string().required("Required"),
-      }),
-      onSubmit: () => {},
-    });
+  const {
+    values,
+    isValid,
+    errors,
+    touched,
+    handleChange,
+    setFieldError,
+    setFieldValue,
+    setErrors,
+    handleBlur,
+  } = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      phone: "",
+      photo: "",
+      positionId: "",
+    },
+    validateOnBlur: true,
+    validateOnMount: true,
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .min(2, "Must be more than 2 characters")
+        .max(60, "Must be 60 characters or less")
+        .required("Required"),
+      phone: Yup.string()
+        .matches(/^\+380\d{9}$/, "Invalid phone number")
+        .required("Required"),
+      positionId: Yup.string().required("Required"),
+      //TODO: regex
+      email: Yup.string()
+        .min(2, "Must be more than 2 characters")
+        .matches(
+          /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/,
+          "Invalid email address"
+        )
+        .max(100, "Must be 100 characters or less")
+        .required("Required"),
+      photo: Yup.string().required("Required"),
+    }),
+    onSubmit: () => {},
+  });
 
   const validatePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
+
+    if (!file) {
+      photoFile.current = "";
+      setFieldValue("photo", "");
+
+      return;
+    }
+
+    photoFile.current = file;
 
     setFieldValue("photo", e.target.files![0].name);
 
@@ -83,38 +108,23 @@ const SignUpForm = ({
     setLoad(true);
 
     const formData = new FormData();
-    const formElement = e.target as HTMLFormElement;
-    const photoInput = formElement.elements.namedItem(
-      "photo"
-    ) as HTMLInputElement | null;
 
     formData.append("name", values.name);
     formData.append("email", values.email);
     formData.append("phone", values.phone);
     formData.append("position_id", values.positionId);
-    if (photoInput && photoInput.files)
-      formData.append("photo", photoInput.files[0]);
+    formData.append("photo", photoFile.current);
 
-    postUser(formData, token)
-      .then((res) => {
-        setStatus(String(res.status));
-      })
-      .catch((err) => {
-        console.log(err);
-        setStatus("");
-      })
-      .finally(() => setLoad(false));
+    postUser(formData, token, setFieldError, setStatus, setErrors).finally(() =>
+      setLoad(false)
+    );
   };
 
-  const onPositionChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const onPositionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFieldValue("positionId", e.target.value);
+  };
 
-  const isFormValid =
-    values.name.trim() !== "" &&
-    values.email.trim() !== "" &&
-    values.phone.trim() !== "" &&
-    values.photo.trim() !== "" &&
-    values.positionId !== "";
+  console.log(values.photo);
 
   return (
     <form className={s.signUpForm} onSubmit={onSubmit}>
@@ -225,7 +235,9 @@ const SignUpForm = ({
                 [s.uploadInput]: values.photo,
               })}
               type="file"
+              title={values.photo || ""}
               name="photo"
+              accept=".jpg, .jpeg"
               id="photo"
               onChange={validatePhoto}
               onBlur={handleBlur}
@@ -240,11 +252,11 @@ const SignUpForm = ({
         ) : (
           <button
             className={clsx({
-              [s.disabled]: !isFormValid,
-              [s.submitButton]: isFormValid,
+              [s.disabled]: !isValid,
+              [s.submitButton]: isValid,
             })}
             type="submit"
-            disabled={!isFormValid}
+            disabled={!isValid}
           >
             Sign up
           </button>

@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { User } from "../../interfaces/interfaces";
+import { CHARS_TRIM_COUNT } from "../../constants/constants";
 import sliceText from "../../utils/sliceText";
 import coverPhoto from "/assets/svgs/photo-cover.svg";
 import s from "./UserCard.module.scss";
@@ -10,8 +11,8 @@ const UserCard = ({
   user: User;
 }) => {
   const { isNameVisible, isEmailVisible } = {
-    isNameVisible: name.length > 25,
-    isEmailVisible: email.length > 25,
+    isNameVisible: name.length > CHARS_TRIM_COUNT,
+    isEmailVisible: email.length > CHARS_TRIM_COUNT,
   };
 
   return (

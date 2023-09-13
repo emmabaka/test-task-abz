@@ -10,13 +10,13 @@ const SignUpSection = ({
 }: {
   setUsers: Dispatch<React.SetStateAction<User[]>>;
 }) => {
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(false);
 
   useEffect(() => {
-    if (status === "201") {
+    if (status) {
       getUpdatedUsers();
     }
-    setTimeout(() => setStatus(""), 3000);
+    setTimeout(() => setStatus(false), 3000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
@@ -34,7 +34,7 @@ const SignUpSection = ({
     <section id="sign-up" className={s.signUpSection}>
       <div className="container">
         <h2 className="title">Working with POST request</h2>
-        {status === "201" ? (
+        {status ? (
           <div className={s.successContainer}>
             <h2 className="title">User successfully registered</h2>
             <img className={s.successImg} src={success} alt="Success" />

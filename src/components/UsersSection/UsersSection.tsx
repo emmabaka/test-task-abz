@@ -15,11 +15,6 @@ const UsersSection = ({
   const [page, setPage] = useState(1);
   const [isLastPage, setIsLastPage] = useState(false);
 
-  useEffect(() => {
-    getUsers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const getUsers = async (page = 1) => {
     setIsLoading(true);
     try {
@@ -49,6 +44,11 @@ const UsersSection = ({
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleShowMoreButtonClick = () => {
     getUsers(page);

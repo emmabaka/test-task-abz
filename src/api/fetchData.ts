@@ -1,12 +1,12 @@
 import axios from "axios";
+import { API_URL } from "../constants/constants";
 
-const API_URL = "https://frontend-test-assignment-api.abz.agency/api/v1"
 
-const fetchData = async(endpoint: string) => {
+const fetchData = async (endpoint: string) => {
   try {
-    return await axios.get(`${API_URL}/${endpoint}`)
+    return await axios.get(`${API_URL}/${endpoint}`);
   } catch (e) {
-    throw new Error
+    throw new Error();
   }
 };
 
