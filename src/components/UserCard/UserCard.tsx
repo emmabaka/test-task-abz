@@ -21,12 +21,20 @@ const UserCard = ({
           currentTarget.src = coverPhoto;
         }}
       />
-      <p className={`${s.userInfo} ${s.userName}`}>
+      <p
+        className={`${s.userInfo} ${s.userName} ${
+          name.length > 25 && s.withTooltip
+        }`}
+      >
         {sliceText(name)}
         {name.length > 25 && <span className={s.tooltip}>{name}</span>}
       </p>
       <p className={s.userInfo}>{sliceText(position)}</p>
-      <p className={`${s.userInfo} ${s.userEmail}`}>
+      <p
+        className={`${s.userInfo} ${s.userEmail} ${
+          email.length > 25 && s.withTooltip
+        }`}
+      >
         {sliceText(email)}
         {email.length > 25 && <span className={s.tooltip}>{email}</span>}
       </p>

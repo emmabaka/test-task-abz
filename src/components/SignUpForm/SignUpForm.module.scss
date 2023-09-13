@@ -52,6 +52,10 @@
     transform: translate(-7px, -12px) scale(0.95);
     background-color: $bg-color;
   }
+
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px $bg-color inset;
+  }
 }
 
 //Radio buttons

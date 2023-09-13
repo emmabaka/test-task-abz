@@ -43,6 +43,13 @@
   }
 }
 
+.userEmail,
+.userName {
+  &.withTooltip {
+    cursor: pointer;
+  }
+}
+
 .userName:hover,
 .userEmail:hover {
   & .tooltip {
