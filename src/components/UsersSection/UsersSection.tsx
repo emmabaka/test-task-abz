@@ -6,6 +6,7 @@ import { User } from "../../interfaces/interfaces";
 import fetchData from "../../api/fetchData";
 import UserCard from "../UserCard/UserCard";
 import s from "./UsersSection.module.scss";
+import LazyLoad from "react-lazy-load";
 
 const UsersSection = ({
   users,
@@ -18,13 +19,12 @@ const UsersSection = ({
   const [page, setPage] = useState(1);
   const [isLastPage, setIsLastPage] = useState(false);
 
-   const notify = () =>
-     toast.error(TOAST_ERR_MESS);
+  const notify = () => toast.error(TOAST_ERR_MESS);
 
   const getUsers = async (page = 1) => {
     setIsLoading(true);
 
-    const {data} = (await fetchData(
+    const { data } = (await fetchData(
       `users?page=${page}&count=6`,
       notify
     )) as AxiosResponse;
@@ -58,28 +58,34 @@ const UsersSection = ({
   const handleShowMoreButtonClick = () => getUsers(page);
 
   return (
-    <section id="users" className={s.usersSection}>
-      <div className="container">
-        <h2 className="title">Working with GET request</h2>
-        <ul className={s.usersCardsWrap}>
-          {users.map((user) => (
-            <UserCard key={user.id} user={user} />
-          ))}
-        </ul>
-        {isLoading ? (
-          <div className="loader"></div>
-        ) : (
-          !isLastPage && (
-            <button
-              className={s.showMoreButton}
-              onClick={handleShowMoreButtonClick}
-            >
-              Show more
-            </button>
-          )
-        )}
-      </div>
-    </section>
+    <LazyLoad
+      onContentVisible={() => {
+        console.log("loaded!");
+      }}
+    >
+      <section id="users" className={s.usersSection}>
+        <div className="container">
+          <h2 className="title">Working with GET request</h2>
+          <ul className={s.usersCardsWrap}>
+            {users.map((user) => (
+              <UserCard key={user.id} user={user} />
+            ))}
+          </ul>
+          {isLoading ? (
+            <div className="loader"></div>
+          ) : (
+            !isLastPage && (
+              <button
+                className={s.showMoreButton}
+                onClick={handleShowMoreButtonClick}
+              >
+                Show more
+              </button>
+            )
+          )}
+        </div>
+      </section>
+    </LazyLoad>
   );
 };
 
