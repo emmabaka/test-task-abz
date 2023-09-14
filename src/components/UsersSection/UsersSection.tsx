@@ -6,7 +6,6 @@ import { User } from "../../interfaces/interfaces";
 import fetchData from "../../api/fetchData";
 import UserCard from "../UserCard/UserCard";
 import s from "./UsersSection.module.scss";
-import LazyLoad from "react-lazy-load";
 
 const UsersSection = ({
   users,
@@ -58,7 +57,6 @@ const UsersSection = ({
   const handleShowMoreButtonClick = () => getUsers(page);
 
   return (
-    <LazyLoad>
       <section id="users" className={s.usersSection}>
         <div className="container">
           <h2 className="title">Working with GET request</h2>
@@ -81,7 +79,6 @@ const UsersSection = ({
           )}
         </div>
       </section>
-    </LazyLoad>
   );
 };
 
