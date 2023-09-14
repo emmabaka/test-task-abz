@@ -1,15 +1,17 @@
 import { useState, useRef, useEffect, Dispatch } from "react";
+import { FormEvent } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import fetchData from "../../api/fetchData";
 import postUser from "../../api/postUser";
+import { TOAST_ERR_MESS } from "../../constants/constants";
 import { RE_EMAIL, RE_PHONE } from "../../regex/regex";
 import { Position } from "../../interfaces/interfaces";
-import { FormEvent } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import s from "./SignUpForm.module.scss";
+import { AxiosResponse } from "axios";
 
 const SignUpForm = ({
   setStatus,
@@ -22,9 +24,17 @@ const SignUpForm = ({
   const [load, setLoad] = useState<boolean>(false);
   const photoFile = useRef<Blob | string>("");
 
+  const notify = () => toast.error(TOAST_ERR_MESS);
+
   useEffect(() => {
-    fetchData("positions").then((res) => setPosition(res.data.positions));
-    fetchData("token").then((res) => setToken(res.data.token));
+    fetchData("positions", notify).then((res) => {
+      const { data } = res as AxiosResponse;
+      setPosition(data.positions);
+    });
+    fetchData("token", notify).then((res) => {
+      const { data } = res as AxiosResponse;
+      setToken(data.token);
+    });
   }, []);
 
   const {
@@ -101,9 +111,6 @@ const SignUpForm = ({
       setErrorText("");
     }
   };
-
-  const notify = () =>
-    toast.error("Oops, something went wrong! Please try again.");
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -270,7 +277,7 @@ const SignUpForm = ({
           )}
         </div>
       </form>
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -281,7 +288,7 @@ const SignUpForm = ({
         draggable
         pauseOnHover
         theme="light"
-      />
+      /> */}
     </>
   );
 };

@@ -1,4 +1,7 @@
 import { Dispatch, useEffect, useState } from "react";
+import { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
+import { TOAST_ERR_MESS } from "../../constants/constants";
 import { User } from "../../interfaces/interfaces";
 import fetchData from "../../api/fetchData";
 import UserCard from "../UserCard/UserCard";
@@ -15,34 +18,36 @@ const UsersSection = ({
   const [page, setPage] = useState(1);
   const [isLastPage, setIsLastPage] = useState(false);
 
+   const notify = () =>
+     toast.error(TOAST_ERR_MESS);
+
   const getUsers = async (page = 1) => {
     setIsLoading(true);
-    try {
-      const res = await fetchData(`users?page=${page}&count=6`);
 
-      const users = res.data.users;
-      const currPage = res.data.page;
-      const totalPages = res.data.total_pages;
+    const {data} = (await fetchData(
+      `users?page=${page}&count=6`,
+      notify
+    )) as AxiosResponse;
 
-      setUsers((prev) => {
-        const isPrevUsers = users.some((currItem: User) =>
-          prev.some((prevItem) => prevItem.id === currItem.id)
-        );
+    const users = data.users;
+    const currPage = data.page;
+    const totalPages = data.total_pages;
 
-        if (isPrevUsers) return prev;
+    setUsers((prev) => {
+      const isPrevUsers = users.some((currItem: User) =>
+        prev.some((prevItem) => prevItem.id === currItem.id)
+      );
 
-        return [...prev, ...users];
-      });
+      if (isPrevUsers) return prev;
 
-      setPage(currPage + 1);
+      return [...prev, ...users];
+    });
 
-      if (currPage === totalPages) setIsLastPage(true);
-    } catch (error) {
-      console.log(error);
-      //TODO: add error state
-    } finally {
-      setIsLoading(false);
-    }
+    setPage(currPage + 1);
+
+    if (currPage === totalPages) setIsLastPage(true);
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -50,9 +55,7 @@ const UsersSection = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleShowMoreButtonClick = () => {
-    getUsers(page);
-  };
+  const handleShowMoreButtonClick = () => getUsers(page);
 
   return (
     <section id="users" className={s.usersSection}>

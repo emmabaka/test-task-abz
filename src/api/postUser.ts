@@ -20,7 +20,8 @@ const postUser = async (
       [key: string]: string[];
     }>
   ) => void,
-  notify: { (): Id; (): void; }) => {
+  notify: { (): Id; (): void }
+) => {
   try {
     const res = await axios.post(`${API_URL}/users`, formData, {
       headers: {
