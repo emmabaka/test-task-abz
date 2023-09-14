@@ -58,11 +58,7 @@ const UsersSection = ({
   const handleShowMoreButtonClick = () => getUsers(page);
 
   return (
-    <LazyLoad
-      onContentVisible={() => {
-        console.log("loaded!");
-      }}
-    >
+    <LazyLoad>
       <section id="users" className={s.usersSection}>
         <div className="container">
           <h2 className="title">Working with GET request</h2>
