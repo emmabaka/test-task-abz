@@ -1,5 +1,6 @@
 import { Dispatch, useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
+import LazyLoad from "react-lazy-load";
 import fetchData from "../../api/fetchData";
 import { toast } from "react-toastify";
 import { User } from "../../interfaces/interfaces";
@@ -26,7 +27,7 @@ const SignUpSection = ({
   const notify = () => toast.error(TOAST_ERR_MESS);
 
   const getUpdatedUsers = async () => {
-    const {data} = (await fetchData(
+    const { data } = (await fetchData(
       "users?page=1&count=6",
       notify
     )) as AxiosResponse;
@@ -35,19 +36,21 @@ const SignUpSection = ({
   };
 
   return (
-    <section id="sign-up" className={s.signUpSection}>
-      <div className="container">
-        <h2 className="title">Working with POST request</h2>
-        {status ? (
-          <div className={s.successContainer}>
-            <h2 className="title">User successfully registered</h2>
-            <img className={s.successImg} src={success} alt="Success" />
-          </div>
-        ) : (
-          <SignUpForm setStatus={setStatus} />
-        )}
-      </div>
-    </section>
+    <LazyLoad height={781}>
+      <section id="sign-up" className={s.signUpSection}>
+        <div className="container">
+          <h2 className="title">Working with POST request</h2>
+          {status ? (
+            <div className={s.successContainer}>
+              <h2 className="title">User successfully registered</h2>
+              <img className={s.successImg} src={success} alt="Success" />
+            </div>
+          ) : (
+            <SignUpForm setStatus={setStatus} />
+          )}
+        </div>
+      </section>
+    </LazyLoad>
   );
 };
 
