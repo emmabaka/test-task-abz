@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import axios, { AxiosError } from "axios";
 import { FormikErrors } from "formik";
 import { API_URL } from "../constants/constants";
+import { Id } from "react-toastify";
 
 type ErrResponse = {
   fails: { [key: string]: string[] };
@@ -18,8 +19,8 @@ const postUser = async (
     errors: FormikErrors<{
       [key: string]: string[];
     }>
-  ) => void
-) => {
+  ) => void,
+  notify: { (): Id; (): void; }) => {
   try {
     const res = await axios.post(`${API_URL}/users`, formData, {
       headers: {
@@ -47,7 +48,9 @@ const postUser = async (
       setErrors(errData.fails);
     }
 
-    //TODO: add tosts >500
+    if (response.status >= 500) {
+      notify();
+    }
   }
 };
 
